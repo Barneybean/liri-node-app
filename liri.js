@@ -28,10 +28,18 @@ function getTweets(){
       client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
         //   console.log(tweets);
-            for (var i = 0; i < tweets.length; i++) {
-                console.log(i+1 + " " + JSON.stringify(tweets[i].text,null,4));
-                console.log("-------")
+            for (var i = 0; i < tweets.length; i++) { //"\n" line break
+                fs.appendFile("log.txt",
+                    i+1 + " " + JSON.stringify(tweets[i].text,null,4) + "\n" + 
+                    "-------" + "\n" + "\n", 
+                    
+                    function (err) {
+                    if (err) {
+                        console.log(err);
+                    }
+                });   
             }
+            console.log("Content Added!");
         }
       });
 };
@@ -39,56 +47,72 @@ function getTweets(){
 // using default function search "the sign" if no name is provided !!! LIT AF by V 
 function getSpotify(musicName = "The Sign by Ace of Base") {
     spotify.search({ type: 'track', query: musicName}, function(err, data) {
+
         if (err) {
           return console.log('Error occurred: ' + err);
         }
         //  console.log(JSON.stringify(data.tracks.items[0],null,4));
-      console.log("Artists: " + data.tracks.items[0].album.artists[0].name ); 
-      console.log("---------");
-      console.log("Musinc Name: " + data.tracks.items[0].name); 
-      console.log("---------");
-      if (data.tracks.items[0].preview_url) {
-          console.log("Preview URL: " + data.tracks.items[0].preview_url);
-          console.log("---------");
-      }
-      else {
-        console.log("Sorry There is no preview available");
-        console.log("---------");
-      };
+        var musicString="";
+            //make a string to store all formatted results 
+            musicString += 
+                "\n" +
+                "Artists: " + data.tracks.items[0].album.artists[0].name + "\n"+"---------"+"\n"+
+                "Musinc Name: " + data.tracks.items[0].name+"\n"+"---------"+"\n"
+                if (data.tracks.items[0].preview_url) {
+                    musicString +=  "Preview URL: " + data.tracks.items[0].preview_url+"\n"+"---------"+"\n"
+                }
+                else {
+                    musicString += "Sorry There is no preview available"+"\n"+"---------"+"\n"
+                }
 
-      if (data.tracks.items[0].album.name) {
-        console.log("Album Name: " + data.tracks.items[0].album.name); 
-        console.log("---------");
-      }
-      else {
-        console.log("Sorry There is no album name available");
-        console.log("---------");
-      };
-      });
+                if (data.tracks.items[0].album.name) {
+                    musicString += "Album Name: " + data.tracks.items[0].album.name + "\n" + "\n"
+                }
+                else {
+                    musicString += "Sorry There is no album name available" + "\n" + "\n"
+                }
+        // log results to log.txt
+        fs.appendFile("log.txt", musicString, function (err) {
+            if (err) {
+                console.log(err);
+            }
+        });
+        console.log("Content Added!");
+    });
 };
+
+
 
 //get OMDB movie
 function getMovie(search = "Mr. Nobody") {
-    console.log(search);
     request('http://www.omdbapi.com/?t='+search+'&apikey=9a1ad367&limit=5', function (error, response, body) {
      // Print the error if one occurred
         if (response && response.statusCode==200) {
             // Print the response status code if a response was received
-            console.log("Movie Title: " + JSON.parse(body).Title);
-            console.log("---------");
-            console.log("Year: " + JSON.parse(body).Year);
-            console.log("---------");
-            console.log("imdbRating: " + JSON.parse(body).imdbRating);
-            console.log("---------");
-            console.log("Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value);
-            console.log("---------");
-            console.log("Country Produced: " + JSON.parse(body).Country);
-            console.log("---------");
-            console.log("Language: " + JSON.parse(body).Language);
-            console.log("---------");
-            console.log("Plot: " + JSON.parse(body).Plot);
-            console.log("---------");
-            console.log("Actors: " + JSON.parse(body).Actors);
+            var movieString = "";
+            movieString +=  
+                "Movie Title: " + JSON.parse(body).Title + "\n" + 
+                "---------" + "\n" + 
+                "Year: " + JSON.parse(body).Year + "\n" + 
+                "---------" + "\n" + 
+                "imdbRating: " + JSON.parse(body).imdbRating + "\n" + 
+                "---------" + "\n" +
+                "Rotten Tomatoes Rating: " + JSON.parse(body).Ratings[1].Value + "\n" + 
+                "---------" + "\n" + 
+                "Country Produced: " + JSON.parse(body).Country + "\n" + 
+                "---------" + "\n" + 
+                "Language: " + JSON.parse(body).Language + "\n" + 
+                "---------" + "\n" + 
+                "Plot: " + JSON.parse(body).Plot + "\n" + 
+                "---------" + "\n" + 
+                "Actors: " + JSON.parse(body).Actors + "\n" + "\n"
+
+            fs.appendFile("log.txt", movieString, function (err) {
+                if (err) {
+                    console.log(err);
+                }
+            });
+            console.log("Content Added!");
         }
         else {
             console.log('error:', error);
