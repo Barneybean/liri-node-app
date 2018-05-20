@@ -6,7 +6,7 @@ seewilliam.gao@gmail.com
 
 ## How to use: 
     #1. Initial Set Up
-        Step one: In order to run this program, clone the repository to your local and create a .env file to supply your api credentials. 
+        Step one: In order to run this program, clone the repository to your local and **Create a .env file to supply your api credentials. 
 
             The .env file should include the following information:
                 # Spotify API keys
@@ -42,6 +42,19 @@ seewilliam.gao@gmail.com
                 Step Three: Once logged in, navigate to https://developer.spotify.com/my-applications/#!/applications/create to register a new application to be used with the Spotify API. You can fill in whatever you'd like for these fields. When finished, click the "complete" button.
 
                 Step Four: On the next screen, scroll down to where you see your client id and client secret. Copy these values down somewhere, you'll need them to use the Spotify API and the node-spotify-api package.
+        
+        Step Four: in terminal, initialize and install following npm packages one by one:
+            
+            npm init     and hit "enter" key through
+
+            npm i twitter
+
+            npm i node-spotify-api
+            
+            npm i request
+
+            npm i dotenv
+
 
     #2. Operate: In terminal, try the following commands:
         
