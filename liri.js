@@ -4,7 +4,7 @@ var request = require('request');
 var Twitter = require('twitter');
 var Spotify = require('node-spotify-api');
 var fs = require('fs');
-var keys = require("./keys.js");
+var keys = require("./keys.js"); ///////
 
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
@@ -27,7 +27,7 @@ function getTweets(){
       var params = {screen_name: 'williamgao07'};
       client.get('statuses/user_timeline', params, function(error, tweets, response) {
         if (!error) {
-        //   console.log(tweets);
+          console.log(tweets);
             for (var i = 0; i < tweets.length; i++) { //"\n" line break
                 fs.appendFile("log.txt",
                     i+1 + " " + JSON.stringify(tweets[i].text,null,4) + "\n" + 
@@ -47,7 +47,7 @@ function getTweets(){
 // using default function search "the sign" if no name is provided !!! LIT AF by V 
 function getSpotify(musicName = "The Sign by Ace of Base") {
     spotify.search({ type: 'track', query: musicName}, function(err, data) {
-
+        
         if (err) {
           return console.log('Error occurred: ' + err);
         }
@@ -126,12 +126,15 @@ function readFile() {
         if (err) {
             console.log(err);
         }
+        else if (data.split(",") == "do-what-it-says") {
+            console.log("that's a bad idea, try movie-this, my tweets, or spotify-this-song");
+        }
         else {
             fromRandom = data.split(",");
             source = fromRandom[0];
             search = fromRandom[1];
             checkInput();
-            console.log (source);
+            console.log (fromRandom);
         }
     })
 };
