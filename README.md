@@ -50,13 +50,7 @@
             
             npm init     and hit "enter" key through
 
-            npm i twitter
-
-            npm i node-spotify-api
-            
-            npm i request
-
-            npm i dotenv
+            npm install     to install all dependencies in package.json
 
 
     #2. Operate: In terminal, try the following commands:
