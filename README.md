@@ -47,11 +47,8 @@
             Step Four: On the next screen, scroll down to where you see your client id and client secret. Copy these values down somewhere, you'll need them to use the Spotify API and the node-spotify-api package.
         
         Step Four: in terminal, initialize and install following npm packages one by one:
-            
-            npm init     and hit "enter" key through
 
             npm install     to install all dependencies in package.json
-
 
     #2. Operate: In terminal, try the following commands:
         
